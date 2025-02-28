@@ -34,6 +34,5 @@ services:
 
 volumes:
   db-data:
-    external: true
 networks:
   tsunami:

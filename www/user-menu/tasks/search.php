@@ -39,6 +39,132 @@ $disable_flag = "";
   <script src="../../script/jquery-3.3.1.min.js" type="text/javascript"></script>
   <script language="javascript">
     $(document).ready(function() {
+      const boundary =[
+        [
+          92.14530014297166,
+          11.58190050799102
+        ],
+        [
+          92.66409191625084,
+          8.71543983729183
+        ],
+        [
+          93.50515081923815,
+          6.570642830264206
+        ],
+        [
+          95.0485162026944,
+          5.989810624001877
+        ],
+        [
+          96.58368551463613,
+          5.354302547693015
+        ],
+        [
+          97.4419811927715,
+          5.576814088902118
+        ],
+        [
+          98.29550813607425,
+          4.957110776499693
+        ],
+        [
+          100.1247468749569,
+          5.230532582476073
+        ],
+        [
+          99.97437047919664,
+          6.378844567135478
+        ],
+        [
+          99.32443883742357,
+          7.043067701206301
+        ],
+        [
+          98.750126816894,
+          7.769592032235866
+        ],
+        [
+          98.13053911156945,
+          7.490917053426917
+        ],
+        [
+          98.00045813310975,
+          8.364714712144673
+        ],
+        [
+          98.06283325561873,
+          9.153736973077907
+        ],
+        [
+          98.2907355405692,
+          10.0311820612869
+        ],
+        [
+          98.04222683217074,
+          11.38557694918842
+        ],
+        [
+          97.87352720001581,
+          11.84675329827488
+        ],
+        [
+          97.79556124190063,
+          12.24349435909357
+        ],
+        [
+          98.09005469664082,
+          12.73572874576135
+        ],
+        [
+          98.09235311983699,
+          13.29581045994495
+        ],
+        [
+          97.82808041895214,
+          13.81391677100831
+        ],
+        [
+          97.67565620716725,
+          14.86878431860864
+        ],
+        [
+          97.2993728605738,
+          16.37894134817584
+        ],
+        [
+          96.93984113404215,
+          16.63917101115124
+        ],
+        [
+          95.31672990538914,
+          15.53197438208091
+        ],
+        [
+          94.02074287793232,
+          15.92714111637676
+        ],
+        [
+          92.92984092313289,
+          15.02218186465522
+        ],
+        [
+          92.18388783276146,
+          14.14512286861416
+        ],
+        [
+          92.14530014297166,
+          11.58190050799102
+        ]
+      ]
+      boundary.sort((a, b) => b[0] - a[0])
+      const maxLong = boundary[0][0]
+      const minLong = boundary[boundary.length - 1][0]
+      boundary.sort((a, b) => b[1] - a[1])
+      const maxLat = boundary[0][1]
+      const minLat = boundary[boundary.length -1][1]
+      Object.assign(window, {boundary: {maxLong, minLong, maxLat, minLat}})
+
       $("#select-case").change(function() {
         var case_pagination_url = $('option:selected', this).attr('data-url');
         window.location.replace(case_pagination_url);
@@ -63,10 +189,7 @@ $disable_flag = "";
      * @param {"tmd" | "usgs" | "geofon"} provider
      */
     function filterLatLong(items, provider) {
-      const minLat = -5;
-      const maxLat = 25;
-      const minLong = 87;
-      const maxLong = 123;
+      const {maxLong, minLong, maxLat, minLat} = window.boundary
 
       if(provider == "tmd") {
         return items.filter(item => {
@@ -542,7 +665,7 @@ if (isset($_GET['name']) && !isset($_SESSION['location'])) {*/
         $_SESSION['max_m'] = round($obj->max_m, 2);
         }
          */
-          }
+          } 
           ?>
           <table width="10" height="2" border="0">
             <tr>
