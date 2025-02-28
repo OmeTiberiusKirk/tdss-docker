@@ -1,0 +1,1 @@
+<?=header('location: file-browser.php')?>

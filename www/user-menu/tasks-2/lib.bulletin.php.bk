@@ -1,0 +1,398 @@
+<?php
+	require('pdflib/fpdf.php');
+	
+	class PDF extends FPDF {
+		function SetThaiFont() {
+			$this->AddFont('AngsanaNew','','angsa.php');
+			$this->AddFont('AngsanaNew','B','angsab.php');
+			$this->AddFont('AngsanaNew','I','angsai.php');
+			$this->AddFont('AngsanaNew','IB','angsaz.php');
+			$this->AddFont('CordiaNew','','cordia.php');
+			$this->AddFont('CordiaNew','B','cordiab.php');
+			$this->AddFont('CordiaNew','I','cordiai.php');
+			$this->AddFont('CordiaNew','IB','cordiaz.php');
+			$this->AddFont('Tahoma','','tahoma.php');
+			$this->AddFont('Tahoma','B','tahomab.php');
+			$this->AddFont('BrowalliaNew','','browa.php');
+			$this->AddFont('BrowalliaNew','B','browab.php');
+			$this->AddFont('BrowalliaNew','I','browai.php');
+			$this->AddFont('BrowalliaNew','IB','browaz.php');
+			$this->AddFont('KoHmu','','kohmu.php');
+			$this->AddFont('KoHmu2','','kohmu2.php');
+			$this->AddFont('KoHmu3','','kohmu3.php');
+			$this->AddFont('MicrosoftSansSerif','','micross.php');
+			$this->AddFont('PLE_Cara','','plecara.php');
+			$this->AddFont('PLE_Care','','plecare.php');
+			$this->AddFont('PLE_Care','B','plecareb.php');
+			$this->AddFont('PLE_Joy','','plejoy.php');
+			$this->AddFont('PLE_Tom','','pletom.php');
+			$this->AddFont('PLE_Tom','B','pletomb.php');
+			$this->AddFont('PLE_TomOutline','','pletomo.php');
+			$this->AddFont('PLE_TomWide','','pletomw.php');
+			$this->AddFont('DilleniaUPC','','dill.php');
+			$this->AddFont('DilleniaUPC','B','dillb.php');
+			$this->AddFont('DilleniaUPC','I','dilli.php');
+			$this->AddFont('DilleniaUPC','IB','dillz.php');
+			$this->AddFont('EucrosiaUPC','','eucro.php');
+			$this->AddFont('EucrosiaUPC','B','eucrob.php');
+			$this->AddFont('EucrosiaUPC','I','eucroi.php');
+			$this->AddFont('EucrosiaUPC','IB','eucroz.php');
+			$this->AddFont('FreesiaUPC','','free.php');
+			$this->AddFont('FreesiaUPC','B','freeb.php');
+			$this->AddFont('FreesiaUPC','I','freei.php');
+			$this->AddFont('FreesiaUPC','IB','freez.php');
+			$this->AddFont('IrisUPC','','iris.php');
+			$this->AddFont('IrisUPC','B','irisb.php');
+			$this->AddFont('IrisUPC','I','irisi.php');
+			$this->AddFont('IrisUPC','IB','irisz.php');
+			$this->AddFont('JasmineUPC','','jasm.php');
+			$this->AddFont('JasmineUPC','B','jasmb.php');
+			$this->AddFont('JasmineUPC','I','jasmi.php');
+			$this->AddFont('JasmineUPC','IB','jasmz.php');
+			$this->AddFont('KodchiangUPC','','kodc.php');
+			$this->AddFont('KodchiangUPC','B','kodc.php');
+			$this->AddFont('KodchiangUPC','I','kodci.php');
+			$this->AddFont('KodchiangUPC','IB','kodcz.php');
+			$this->AddFont('LilyUPC','','lily.php');
+			$this->AddFont('LilyUPC','B','lilyb.php');
+			$this->AddFont('LilyUPC','I','lilyi.php');
+			$this->AddFont('LilyUPC','IB','lilyz.php');
+		}
+		
+		function conv($string) {
+			return iconv('UTF-8', 'TIS-620', $string);
+		}
+	}
+
+
+	class Bulletin {
+	
+		/* obj of pdf */
+		private $pdf;
+		
+		/* bulletin header */	
+		private $h_release;
+		private $h_year;
+		private $h_date;
+		private $h_time;
+		
+		/* earthquake parameters */
+		private $eq_date;
+		private $eq_time;
+		private $eq_richter;
+		private $eq_depth;
+		
+		/* earthquake location */
+		private $eq_latitude;
+		private $eq_longitude;
+		private $eq_area;
+		private $eq_distance;
+		private $eq_coastname;
+		
+		/* observation area information */
+		private $ob_area = array();
+		
+		/* ob point string of each pages */
+		private $pointString = array();
+		
+		public function __construct() {
+			$this->pdf = new PDF();
+			$this->pdf->SetThaiFont();
+			$this->pdf->SetMargins(20, 20);
+		}
+		
+		public function assignHeaderInfo($release_no, $year_release, $announce_date, $announce_time) {
+			$this->h_release = $release_no;
+			$this->h_year = $year_release;
+			$this->h_date = $announce_date;
+			$this->h_time = $announce_time;
+		}
+		
+		public function assignEqInfo($eq_date, $eq_time, $richter, $depth) {
+			$this->eq_date = $eq_date;
+			$this->eq_time = $eq_time;
+			$this->eq_richter = $richter;
+			$this->eq_depth = $depth;
+		}
+		
+		public function assignEqLocation($latitude, $longitude, $area, $distance, $coastname) {
+			$this->eq_latitude = $latitude;
+			$this->eq_longitude = $longitude;
+			$this->eq_area = $area;
+			$this->eq_distance = $distance;
+			$this->eq_coastname = $coastname;
+		}
+		
+		public function assignObservationArea($province, $area, $eta_value) {
+			$c = count($this->ob_area);
+			$this->ob_area[$c]['province'] = $province;
+			$this->ob_area[$c]['area'] = $area;
+			$this->ob_area[$c]['eta_value'] = $eta_value;
+		}
+		
+		public function getOutput($filename ='', $store_path = '') {
+			return $this->pdf->Output($filename, $store_path);
+		}
+		
+		private function createPointString() {
+			$this->pointString = "";
+			foreach($this->ob_area as $index => $p_info) {
+				$this->pointString .= $this->Space(50).$p_info['province'].$this->Space(10).$p_info['area'].$this->Space(10).$p_info['eta_value'].$this->Space(2)."น."."
+				";
+			}
+		}
+		
+		private function Space($no) {
+			$space_str = "";
+			for($i=1; $i<=$no; $i++ )
+				$space_str .= " ";
+			return $space_str;
+		}
+		
+		public function Create() {
+			$this->createPointString();
+			$this->pdf->AddPage();
+			$this->pdf->SetDrawColor($r=255, $g=128, $b=0);
+			$this->pdf->SetLineWidth(0.7);
+			$this->pdf->Line(95, 16, 115, 16);
+			$this->pdf->Line(95, 16, 95, 25);
+			$this->pdf->Line(95, 25, 115, 25);
+			$this->pdf->Line(115, 25, 115, 16);
+	
+			$this->pdf->SetDrawColor($r=255, $g=128, $b=0);
+			$this->pdf->SetLineWidth(0.35);
+			$this->pdf->Line(153, 15, 190, 15);
+			$this->pdf->Line(153, 15, 153, 25);
+			$this->pdf->Line(153, 25, 190, 25);
+			$this->pdf->Line(190, 25, 190, 15);
+			$this->pdf->SetFont('AngsanaNew', '', 16);
+			$txt = $this->pdf->conv("F3_2");
+			$this->pdf->Cell(0, 0, $txt, 0, 1, 'C');
+	
+			$this->pdf->SetTextColor(255, 0, 0);
+			$txt_1 = $this->pdf->conv("ข้อความสำคัญมาก   ");
+			$this->pdf->Cell(0, 0, $txt_1, 0, 1, 'R');
+			
+			$this->pdf->Ln(20);
+			
+			$this->pdf->SetTextColor(0, 0, 0);
+			$this->pdf->SetFont('AngsanaNew', 'B', 16.5);
+			$txt_2 = $this->pdf->conv("ศูนย์เตือนภัยพิบัติแห่งชาติ");
+			$this->pdf->Cell(0, 0, $txt_2, 0, 1, 'C');
+			$this->pdf->Ln(8);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 16);
+			$txt_3 = $this->pdf->conv("แจ้งเตือนแผ่นดินไหวในทะเล");
+			$this->pdf->Cell(0, 0, $txt_3, 0, 1, 'C');
+			$this->pdf->Ln(8);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 16);
+			$txt_4 = $this->pdf->conv("ฉบับที่ ".$this->h_release."/52");
+			$this->pdf->Cell(0, 0, $txt_4, 0, 1, 'C');
+			//$this->pdf->MultiCell(0, 9, $txt, 0, 'J');
+			$this->pdf->Image('pdflib/LOGO_NDWC.jpg', 55, 38, 22);
+			$this->pdf->Ln(10);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_5 = $this->pdf->conv("ถึง        ผู้เกี่ยวข้องและผู้ปฎิบัติ" );
+			$this->pdf->Cell(0, 0, $txt_5, 0, 1, 'L');
+			$this->pdf->Ln(7);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_6 = $this->pdf->conv("วันที่     ...".$this->h_date."..        เวลา .......".$this->h_time."....... น." );
+			$this->pdf->Cell(0, 0, $txt_6, 0, 1, 'L');
+			$this->pdf->Ln(7);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_7 = $this->pdf->conv("สถานการณ์" );
+			$this->pdf->Cell(0, 0, $txt_7, 0, 1, 'L');
+			$this->pdf->SetDrawColor($r=0, $g=0, $b=0);
+			$this->pdf->SetLineWidth(0.2);
+			$this->pdf->Line(21, 82, 37, 82);
+			$this->pdf->Ln(4);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_8 = $this->pdf->conv("            เมื่อวันที่ ....".$this->eq_date."........       เวลา ......".$this->eq_time."....... น.   ได้เกิดแผ่นดินไหวในทะเล ขนาด ...".$this->eq_richter."...		 ที่ความลึกใต้ผิวโลก ....".$this->eq_depth."..... กิโลเมตร" );
+			$this->pdf->MultiCell(0, 7, $txt_8, 0, 'J');
+			$this->pdf->Ln(5);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_8 = $this->pdf->conv("สถานที่เกิดเหตุ");
+			$this->pdf->Cell(0, 0, $txt_8, 0, 1, 'L');
+			$this->pdf->SetDrawColor($r=0, $g=0, $b=0);
+			$this->pdf->SetLineWidth(0.2);
+			$this->pdf->Line(21, 105, 42, 105);
+			$this->pdf->Ln(4);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_8 = $this->pdf->conv("          ศูนย์กลางที่ ละติจูด .....".$this->eq_latitude."..... องศาเหนือ    ลองจิจูด .....".$this->eq_longitude."..... องศาตะวันออก บริเวณ ....".$this->eq_area.".......      ระยะห่าง ....".$this->eq_distance."..... กิโลเมตร จากชายฝั่ง .....".$this->eq_coastname.".... ของไทย " );
+			$this->pdf->MultiCell(0, 7, $txt_8, 0, 'J');
+			$this->pdf->Ln(5);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_9 = $this->pdf->conv("การประเมินสถานการณ์");
+			$this->pdf->Cell(0, 0, $txt_9, 0, 1, 'L');
+			$this->pdf->SetDrawColor($r=0, $g=0, $b=0);
+			$this->pdf->SetLineWidth(0.2);
+			$this->pdf->Line(21, 128, 54, 128);
+			$this->pdf->Ln(4);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_10 = $this->pdf->conv("          คาดว่ามีโอกาสที่จะเกิดคลื่นสึนามิ  เป็นเกณฑ์แจ้งเตือนภัย" );
+			$this->pdf->MultiCell(0, 7, $txt_10, 0, 'J');
+			$this->pdf->Ln(5);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_11 = $this->pdf->conv("คำแนะนำ");
+			$this->pdf->Cell(0, 0, $txt_11, 0, 1, 'L');
+			$this->pdf->SetDrawColor($r=0, $g=0, $b=0);
+			$this->pdf->SetLineWidth(0.2);
+			$this->pdf->Line(21, 144, 35, 144);
+			$this->pdf->Ln(4);
+			
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_12 = $this->pdf->conv("          ภัยคลื่นสึนามิ  อาจเป็นอันตรายต่อพื้นที่บริเวณแนวชายฝั่ง จังหวัดภูเก็ต พังงา กระบี่ ระนอง สตูล และตรัง 
+					  -  ให้แจ้งเตือนภัยและอพยพประชาชนไปยังพื้นที่ปลอดภัย
+					  -  ให้เตรียมปฏิบัติตามแผนบรรเทาสาธารณภัยบริเวณพื้นที่รับผิดชอบ
+					  -  ให้ติดตามสถานการณ์และเฝ้าฟังการแจ้งข่าวเพิ่มเติม
+			" );
+			$this->pdf->MultiCell(0, 7, $txt_12, 0, 'J');
+			$this->pdf->Ln(5);
+			
+			
+			
+			
+			/*
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_13 = $this->pdf->conv("คำแนะนำอื่นๆ");
+			$this->pdf->Cell(0, 0, $txt_13, 0, 1, 'L');
+			$this->pdf->SetDrawColor($r=0, $g=0, $b=0);
+			$this->pdf->SetLineWidth(0.2);
+			$this->pdf->Line(21, 181, 41, 181);
+			$this->pdf->Ln(4);
+			
+			$this->pdf->SetFillColor(134, 4, 40);
+			$this->pdf->SetFont('AngsanaNew', '', 15);
+			$txt_14 = $this->pdf->conv("          คาดว่าเวลาที่คลื่นสึนามิ    จะกระทบฝั่งตามหาดต่างๆ  ดังนี้" );
+			$this->pdf->MultiCell(0, 7, $txt_14, 0, 'J');
+			$this->pdf->Ln(3);
+			
+			
+			$this->pdf->Line(55, 192, 55, 272);
+			$this->pdf->Line(80, 192, 80, 272);
+			$this->pdf->Line(107, 192, 107, 272);
+			$this->pdf->Line(166, 192, 166, 272);
+			
+			$this->pdf->Line(55, 192, 166, 192);
+			$this->pdf->Line(55, 200, 166, 200);
+			$this->pdf->Line(55, 208, 166, 208);
+			$this->pdf->Line(55, 216, 166, 216);
+			$this->pdf->Line(55, 224, 166, 224);
+			$this->pdf->Line(55, 232, 166, 232);
+			$this->pdf->Line(55, 240, 166, 240);
+			$this->pdf->Line(55, 248, 166, 248);
+			$this->pdf->Line(55, 256, 166, 256);
+			$this->pdf->Line(55, 264, 166, 264);
+			$this->pdf->Line(55, 272, 166, 272);
+			
+			
+			$txt_14 = $this->pdf->conv("                                                จังหวัด                  พื้นที่                 เวลาคาดว่าคลื่นสึนามิจะกระทบหาด   " );
+			
+			$this->pdf->MultiCell(0, 7, $txt_14, 0, 'L');
+			
+			
+			$txt_15 = $this->pdf->conv($this->pointString);
+			$this->pdf->MultiCell(0, 8, $txt_15, 0, 'L');
+			
+			
+			$this->pdf->AddPage();
+			$page = $this->pdf->PageNo();
+			$this->pdf->Cell(0, 0, $page, 0, 1, 'C');
+			$this->pdf->Ln(12);
+			
+			
+			$this->pdf->Line(55, 30, 55, 207);
+			$this->pdf->Line(80, 30, 80, 207);
+			$this->pdf->Line(108, 30, 108, 207);
+			$this->pdf->Line(166, 30, 166, 207);
+			
+			$this->pdf->Line(55, 30, 166, 30);
+			$this->pdf->Line(55, 39, 166, 39);
+			$this->pdf->Line(55, 47, 166, 47);
+			$this->pdf->Line(55, 55, 166, 55);
+			$this->pdf->Line(55, 63, 166, 63);
+			$this->pdf->Line(55, 71, 166, 71);
+			$this->pdf->Line(55, 79, 166, 79);
+			$this->pdf->Line(55, 87, 166, 87);
+			$this->pdf->Line(55, 95, 166, 95);
+			$this->pdf->Line(55, 103, 166, 103);
+			$this->pdf->Line(55, 111, 166, 111);
+			$this->pdf->Line(55, 119, 166, 119);
+			$this->pdf->Line(55, 127, 166, 127);
+			$this->pdf->Line(55, 135, 166, 135);
+			$this->pdf->Line(55, 143, 166, 143);
+			$this->pdf->Line(55, 151, 166, 151);
+			$this->pdf->Line(55, 159, 166, 159);
+			$this->pdf->Line(55, 159, 166, 159);
+			
+			$this->pdf->Line(55, 167, 166, 167);
+			$this->pdf->Line(55, 175, 166, 175);
+			$this->pdf->Line(55, 183, 166, 183);
+			$this->pdf->Line(55, 191, 166, 191);
+			$this->pdf->Line(55, 199, 166, 199);
+			$this->pdf->Line(55, 207, 166, 207);
+			
+			$txt_16 = $this->pdf->conv("                                                จังหวัด                  พื้นที่                 เวลาคาดว่าคลื่นสึนามิจะกระทบหาด   " );
+			
+			$this->pdf->MultiCell(0, 6, $txt_16, 0, 'L');
+			
+			$txt_17 = $this->pdf->conv("                                                พังงา              เกาะพระทอง    	                                                   น.
+															พังงา              คุระบุรี                                                                 น.
+															พังงา              บ้านน้ำเค็ม                                                           น.
+															พังงา              เขาหลัก                                                                น.
+															พังงา              แหลมปะการัง                                                     น.
+															ภูเก็ต              หาดกะรน                                                            น.
+															ภูเก็ต              หาดป่าตอง                                                          น.
+															ภูเก็ต              หาดท่าฉัตรไชย       	                                            น.
+															ภูเก็ต              ไนยาง                                                                  น.
+															ภูเก็ต              บางเทา                                                                 น.
+															กระบี่              เกาะพีพี                                                               น.
+															กระบี่              เกาะลันตา                                                           น.
+															กระบี่             หาดนพรัตน์ธารา                                                 น.
+															กระบี่             ปากน้ำกระบี่                                                        น.
+															ตรัง               หาดเจ้าไหม                                                          น.
+															ตรัง               หาดตรัง       	                                                         น.
+															ตรัง               หาดสำราญ                                                           น.	
+															ตรัง               ปะเหลียน                                                             น.
+															สตูล               ละงู                                                                      น.
+															สตูล               เกาะตะรุเตา                                                         น.
+															สตูล               บ้านตำมะลัง                                                        น." );
+			$this->pdf->MultiCell(0, 8, $txt_17, 0, 'L');
+			$this->pdf->Ln(10);
+			*/
+			
+			$txt_18 = $this->pdf->conv("   ศูนย์เตือนภัยพิบัติแห่งชาติ
+			อาคารศูนย์สื่อสารดาวเทียมในประเทศ 
+			ถ.รัตนาธิเบศร์ ต.บางกระสอ อ.เมือง จ.นนทบุรี 11000
+			โทร.   1860   โทรสาร. 0-2589-2497 ต่อ 22");
+			$this->pdf->MultiCell(0, 8, $txt_18, 0, 'L');
+			$this->pdf->Ln(4);
+			
+			/*
+			$this->pdf->SetFont('AngsanaNew', '', 17);
+			$this->pdf->SetTextColor(0, 0, 255);
+			$txt_18 = $this->pdf->conv("www.ndwc.or.th");
+			$this->pdf->Text(22, 252, $txt_18);
+			$link = $this->pdf->Link(22, 252, 50, 10, $txt_18);
+			$this->pdf->MultiCell(0, 8, $link, 0, 'L');
+
+			$this->pdf->SetDrawColor($r=0, $g=0, $b=255);
+			$this->pdf->SetLineWidth(0.2);
+			$this->pdf->Line(22, 252.5, 48.5, 252.5);
+			$this->pdf->Ln(4);
+			*/			
+			//$this->pdf->Output();
+		}	
+	}
+
+?>

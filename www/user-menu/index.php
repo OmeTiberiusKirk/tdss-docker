@@ -1,0 +1,1 @@
+<?=header('location: tasks/search.php?section=4');?>

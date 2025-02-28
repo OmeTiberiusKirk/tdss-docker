@@ -1,0 +1,6 @@
+Main UI scripts to display on Web Portal (changed in 2018)
+    - user-menu/tasks/result.php
+    - user-menu/tasks/search.php
+    - user-menu/tasks/bulletin_release.php
+    - user-menu/data-source/file-browser.php
+    - user-menu/tasks/bulletin.php

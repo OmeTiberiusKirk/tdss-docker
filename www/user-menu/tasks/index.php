@@ -1,0 +1,1 @@
+<?=header('location: result.php?section=3')?>

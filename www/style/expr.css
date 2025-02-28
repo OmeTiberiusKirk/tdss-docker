@@ -1,0 +1,12 @@
+#Layer1 {
+	position:absolute;
+	left:4px;
+	top:8px;
+	width:99px;
+	height:60px;
+	z-index:1;
+}
+.style1 {
+	font-size: 22px;
+	color: #FFFFFF;
+}

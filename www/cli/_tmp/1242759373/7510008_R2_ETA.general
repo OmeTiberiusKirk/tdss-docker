@@ -1,0 +1,12 @@
+file = /home/ndwc/RUN_WORKSPACE/1242759373/7510008_R2_ETA.dat
+grid = 689 x 953
+format = ascii
+interleaving = record
+majority = column
+field = field0
+structure = scalar
+type = float
+dependency = positions
+positions = regular, regular, 0, 1, 0, 1
+
+end

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?><ndwc-tdss reference-timestamp="1253167711">
+	<bulletin-info release="90" year="52" date="09/17/2009 13:08:28">
+		<earthquake-info date="07/15/2009 16:22:28">
+			<region name="Andaman Sea" />
+			<magnitude value="8.2" />
+			<depth value="2" />
+			<location latitude="-45.635" longitude="166.56" />
+		</earthquake-info>
+		<observation-area province-name-th="พังงา" province-name-en="Phang Nga" area-name-th="เกาะเมียง" area-name-en="Ko Miang" eta="-" zmax="0.01" /> 
+		<observation-area province-name-th="ระนอง" province-name-en="Ranong" area-name-th="ปากน้ำระนอง" area-name-en="Paknam Ranong" eta="16:22:35" zmax="0.04" /> 
+		<observation-area province-name-th="ระนอง" province-name-en="Ranong" area-name-th="หาดบางเบน" area-name-en="Hat Bangban" eta="16:22:31" zmax="0.06" /> 
+		<observation-area province-name-th="ระนอง" province-name-en="Ranong" area-name-th="แหลมพ่อตา" area-name-en="Laem Phota" eta="16:22:35" zmax="0.04" /> 
+		<observation-area province-name-th="ระนอง" province-name-en="Ranong" area-name-th="บ้านทะเลนอก" area-name-en="Ban Thalaenok" eta="16:22:31" zmax="0.08" /> 
+		<observation-area province-name-th="ระนอง" province-name-en="Ranong" area-name-th="หาดประพาส" area-name-en="Hat Prapas" eta="16:22:31" zmax="0.11" /> 
+		<observation-area province-name-th="พังงา" province-name-en="Phang Nga" area-name-th="คุระบุรี" area-name-en="Kuraburi" eta="16:22:31" zmax="0.05" /> 
+		<observation-area province-name-th="พังงา" province-name-en="Phang Nga" area-name-th="เกาะพระทอง" area-name-en="Ko Prathong" eta="16:22:31" zmax="0.08" /> 
+		<observation-area province-name-th="พังงา" province-name-en="Phang Nga" area-name-th="เกาะคอเขา" area-name-en="Ko Khonkao" eta="16:22:31" zmax="0.1" /> 
+		<observation-area province-name-th="พังงา" province-name-en="Phang Nga" area-name-th="บ้านน้ำเค็ม" area-name-en="Ban Namkaem" eta="16:22:31" zmax="0.07" /> 
+		<observation-area province-name-th="พังงา" province-name-en="Phang Nga" area-name-th="แหลมปะการัง" area-name-en="Laem Pakarang" eta="16:22:31" zmax="0.06" /> 
+		<observation-area province-name-th="พังงา" province-name-en="Phang Nga" area-name-th="เขาหลัก" area-name-en="Khao Lak" eta="16:22:31" zmax="0.09" /> 
+		<observation-area province-name-th="พังงา" province-name-en="Phang Nga" area-name-th="ทับละมุ" area-name-en="Thaplamu" eta="16:22:31" zmax="0.08" /> 
+		<observation-area province-name-th="พังงา" province-name-en="Phang Nga" area-name-th="ท้ายเหมือง" area-name-en="Theimaung" eta="16:22:31" zmax="0.06" /> 
+		<observation-area province-name-th="ภูเก็ต" province-name-en="Phuket" area-name-th="บ้านท่าฉัตรไชย" area-name-en="Ban Tachatchai" eta="16:22:35" zmax="0.07" /> 
+		<observation-area province-name-th="ภูเก็ต" province-name-en="Phuket" area-name-th="ไนยาง" area-name-en="Naiyang" eta="16:22:31" zmax="0.05" /> 
+		<observation-area province-name-th="กระบี่" province-name-en="Krabi" area-name-th="ปากน้ำกระบี่" area-name-en="Paknam Krabi" eta="16:22:31" zmax="0.03" /> 
+		<observation-area province-name-th="กระบี่" province-name-en="Krabi" area-name-th="หาดนพรัตน์ธารา" area-name-en="Hat Noparatthara" eta="16:22:31" zmax="0.02" /> 
+		<observation-area province-name-th="ภูเก็ต" province-name-en="Phuket" area-name-th="บางเทา" area-name-en="Bangtao" eta="16:22:31" zmax="0.04" /> 
+		<observation-area province-name-th="ภูเก็ต" province-name-en="Phuket" area-name-th="หาดป่าตอง" area-name-en="Hat Patong" eta="16:22:31" zmax="0.06" /> 
+		<observation-area province-name-th="ภูเก็ต" province-name-en="Phuket" area-name-th="หาดกะรน" area-name-en="Hat Karon" eta="16:22:31" zmax="0.04" /> 
+		<observation-area province-name-th="กระบี่" province-name-en="Krabi" area-name-th="เกาะพีพี" area-name-en="Ko Phi Phi" eta="16:22:31" zmax="0.02" /> 
+		<observation-area province-name-th="ตรัง" province-name-en="Trang" area-name-th="หาดเจ้าไหม" area-name-en="Hat Chanmai" eta="16:22:31" zmax="0.02" /> 
+		<observation-area province-name-th="กระบี่" province-name-en="Krabi" area-name-th="เกาะลันตา" area-name-en="Ko Lanta" eta="16:22:35" zmax="0.02" /> 
+		<observation-area province-name-th="ตรัง" province-name-en="Trang" area-name-th="หาดตรัง" area-name-en="Hat Trung" eta="16:22:31" zmax="0.03" /> 
+		<observation-area province-name-th="ตรัง" province-name-en="Trang" area-name-th="หาดสำราญ" area-name-en="Hat Somlan" eta="16:22:35" zmax="0.03" /> 
+		<observation-area province-name-th="ตรัง" province-name-en="Trang" area-name-th="ปะเหลียน" area-name-en="Palaen" eta="16:22:35" zmax="0.05" /> 
+		<observation-area province-name-th="สตูล" province-name-en="Satun" area-name-th="ละงู" area-name-en="LaNgu" eta="16:22:35" zmax="0.04" /> 
+		<observation-area province-name-th="สตูล" province-name-en="Satun" area-name-th="เกาะตะรุเตา" area-name-en="Ko Tatrutao" eta="16:22:38" zmax="0.02" /> 
+		<observation-area province-name-th="สตูล" province-name-en="Satun" area-name-th="บ้านตำมะลัง" area-name-en="Ban Tammalang" eta="16:22:35" zmax="0.03" /> 
+	</bulletin-info>
+	<database-matched-result reference-id="" distance="" magnitude="" depth="" latitude="" longitude="" >
+		<visualization type="eta" region-no="1">
+			<image-map  filename="-ETA-R1-MAP.png">
+</image-map>
+			<image-colorbar  filename="-ETA-R1-COLORBAR.png">
+</image-colorbar>
+		</visualization>
+		<visualization type="eta" region-no="2">
+			<image-map filename="-ETA-R2-MAP.png">
+</image-map>
+			<image-colorbar filename="-ETA-R2-COLORBAR.png">
+</image-colorbar>
+		</visualization>
+		<visualization type="zmax" region-no="1">
+			<image-map filename="-ZMAX-R1-MAP.png">
+</image-map>
+			<image-colorbar filename="-ZMAX-R1-COLORBAR.png">
+</image-colorbar>
+		</visualization>
+		<visualization type="zmax" region-no="2">
+			<image-map filename="-ZMAX-R2-MAP.png">
+</image-map>
+			<image-colorbar filename="-ZMAX-R2-COLORBAR.png">
+</image-colorbar>
+		</visualization>
+	</database-matched-result>
+</ndwc-tdss>
